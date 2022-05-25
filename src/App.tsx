@@ -33,12 +33,30 @@ function App() {
   };
 
   return (
-    <ListQuestion
-      questions={state}
-      onDragEnd={onDragEnd}
-      getListStyle={getListStyle}
-      getItemStyle={getItemStyle}
-    />
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          setState([...state, []]);
+        }}
+      >
+        Add new group
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setState([...state, getItems(1)]);
+        }}
+      >
+        Add new item
+      </button>
+      <ListQuestion
+        questions={state}
+        onDragEnd={onDragEnd}
+        getListStyle={getListStyle}
+        getItemStyle={getItemStyle}
+      />
+    </>
   );
 }
 

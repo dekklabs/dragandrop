@@ -6,19 +6,6 @@ interface DropSource {
 const useGenerateFakeData = () => {
   const grid: number = 8;
 
-  const getItems2 = (count: number, offset: number = 0) => {
-    return Array.from({length: count}, (v, k) => k).map(k => ({
-      id: `item-${k + offset}-${new Date().getTime()}`,
-      content: `item ${k + offset}`
-    }));
-  }
-
-  const getItems3 = (count: number, offset: number = 0) =>
-    Array.from({length: count}, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`
-  }));
-
   const getItems = (count: any, offset: number = 0) =>
   Array.from({ length: count }, (v, k) => k).map((k) => ({
     id: `item-${k + offset}-${new Date().getTime()}`,
