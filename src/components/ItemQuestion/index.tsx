@@ -8,7 +8,6 @@ const ItemQuestion: FC<Props> = (props) => {
   return (
     <Draggable 
       key={question.id}
-      //draggableId={question.id}
       draggableId={`${question.id}`}
       index={index}
     >
@@ -26,7 +25,7 @@ const ItemQuestion: FC<Props> = (props) => {
             display: "flex",
             justifyContent: "space-around"
             }}>
-            {question.content}
+            item {index}
           </div>
         </div>
       )}

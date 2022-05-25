@@ -7,7 +7,7 @@ const ListQuestion: FC<Props> = (props) => {
   const { onDragEnd, questions, getListStyle, getItemStyle } = props;
 
   return (
-    <div style={{ display: "flex" }}>
+    <div>
       <DragDropContext onDragEnd={onDragEnd}>
         {questions.map((question, index) => (
           <Droppable key={index} droppableId={`${index}`}>
@@ -17,6 +17,7 @@ const ListQuestion: FC<Props> = (props) => {
                 style={getListStyle(snapshot.isDraggingOver)}
                 {...provided.droppableProps}
               >
+                <p>Group {index + 1}</p>
                 {question.map((item: any, index: number) => (
                   <ItemQuestion
                     question={item}

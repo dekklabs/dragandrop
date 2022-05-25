@@ -6,7 +6,7 @@ import useGenerateFakeData from "./hooks/useGenerateFakeData";
 function App() {
   const { getItems, reorder, move, getListStyle, getItemStyle } =
     useGenerateFakeData();
-  const [state, setState] = useState<any[]>([getItems(10), getItems(5, 10)]);
+  const [state, setState] = useState<any[]>([getItems(8), getItems(5, 8)]);
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -32,24 +32,33 @@ function App() {
     }
   };
 
+  const handleAddGroup = () => {
+    setState([...state, []]);
+  }
+
+  const handleAddItem = () => {
+    setState([...state, getItems(1)]);
+  }
+
+  console.log(state);
+
   return (
     <>
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, []]);
-        }}
-      >
-        Add new group
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, getItems(1)]);
-        }}
-      >
-        Add new item
-      </button>
+      <div style={{ marginBottom: 20, paddingTop: 20, marginLeft: 10 }}>
+        <button
+          type="button"
+          onClick={handleAddGroup}
+          style={{marginRight: 20}}
+        >
+          Add new group
+        </button>
+        <button
+          type="button"
+          onClick={handleAddItem}
+        >
+          Add new item
+        </button>
+      </div>
       <ListQuestion
         questions={state}
         onDragEnd={onDragEnd}
