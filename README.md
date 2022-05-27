@@ -1,4 +1,4 @@
 # Drag and drop groups
 
 ## APP
-![APP](./app.png)
+![APP](./app.gif)
