@@ -1,16 +1,16 @@
 interface DropSource {
   index: number;
-  droppableId: number
+  droppableId: number;
 }
 
 const useGenerateFakeData = () => {
   const grid: number = 8;
 
   const getItems = (count: any, offset: number = 0) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`
-  }));
+    Array.from({ length: count }, (v, k) => k).map((k) => ({
+      id: `item-${k + offset}-${new Date().getTime()}`,
+      content: `item ${k + offset}`,
+    }));
 
   const reorder = (list: any, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
@@ -19,19 +19,24 @@ const useGenerateFakeData = () => {
     result.splice(endIndex, 0, removed);
 
     return result;
-  }
+  };
 
-  const move = (source: any[], destination: any, droppableSource: DropSource, droppableDestination: any) => {
+  const move = (
+    source: any[],
+    destination: any,
+    droppableSource: DropSource,
+    droppableDestination: any
+  ) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
 
     destClone.splice(droppableDestination.index, 0, removed);
 
-    const result: {[droppableId: string]: any} = {};
+    const result: { [droppableId: string]: any } = {};
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
-    console.log("work")
+    console.log("work");
 
     return result;
   };
@@ -45,14 +50,21 @@ const useGenerateFakeData = () => {
     background: isDragging ? "lightgreen" : "grey",
 
     // styles we need to apply on draggles
-    ...draggableStyle
+    ...draggableStyle,
   });
 
   const getListStyle = (isDraggingOver: boolean) => ({
     background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: grid,
-    width: 250
+    width: 250,
   });
+
+  const selectedPositionToArrayState = (position: number, item: any[]) => {
+    return item.map((item: any, index: number) => {
+      if (index === position) return [...item, ...getItems(1)];
+      return item;
+    });
+  };
 
   return {
     getItems,
@@ -61,7 +73,8 @@ const useGenerateFakeData = () => {
     move,
     getItemStyle,
     getListStyle,
-  }
-}
+    selectedPositionToArrayState,
+  };
+};
 
 export default useGenerateFakeData;

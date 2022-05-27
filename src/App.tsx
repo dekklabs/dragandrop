@@ -4,9 +4,19 @@ import { useState } from "react";
 import useGenerateFakeData from "./hooks/useGenerateFakeData";
 
 function App() {
-  const { getItems, reorder, move, getListStyle, getItemStyle } =
-    useGenerateFakeData();
-  const [state, setState] = useState<any[]>([getItems(8), getItems(5, 8)]);
+  const {
+    getItems,
+    reorder,
+    move,
+    getListStyle,
+    getItemStyle,
+    selectedPositionToArrayState,
+  } = useGenerateFakeData();
+  const [state, setState] = useState<any[]>([
+    getItems(0),
+    getItems(8),
+    getItems(5, 8),
+  ]);
 
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -34,13 +44,12 @@ function App() {
 
   const handleAddGroup = () => {
     setState([...state, []]);
-  }
+  };
 
   const handleAddItem = () => {
-    setState([...state, getItems(1)]);
-  }
-
-  console.log(state);
+    const response: any[][] = selectedPositionToArrayState(0, state);
+    setState(response);
+  };
 
   return (
     <>
@@ -48,14 +57,11 @@ function App() {
         <button
           type="button"
           onClick={handleAddGroup}
-          style={{marginRight: 20}}
+          style={{ marginRight: 20 }}
         >
           Add new group
         </button>
-        <button
-          type="button"
-          onClick={handleAddItem}
-        >
+        <button type="button" onClick={handleAddItem}>
           Add new item
         </button>
       </div>
