@@ -36,7 +36,6 @@ const useGenerateFakeData = () => {
     const result: { [droppableId: string]: any } = {};
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
-    console.log("work");
 
     return result;
   };
