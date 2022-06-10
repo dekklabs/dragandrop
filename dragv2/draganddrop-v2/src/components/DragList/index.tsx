@@ -15,9 +15,9 @@ const DragList = () => {
   } = useDragAndDrop();
   const [elements, setElements] = React.useState<any>(generateLists());
 
-  //React.useEffect(() => {
-    //setElements(generateLists());
-  //}, []);
+  React.useEffect(() => {
+    setElements(generateLists());
+  }, []);
 
   const onDragEnd = (result: any) => {
     if (!result.destination) {
