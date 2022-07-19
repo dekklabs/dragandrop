@@ -10,6 +10,44 @@ const DragVTwo = () => {
   const { removeFromList, addToList } = useDragVtow();
   const [data, setdata] = useState(dataItem);
 
+  const getFindIndex = (name: string) => data.findIndex((item: any) => item.name === name);
+
+  const getQuestions = (index: number) => [...data[index].questions];
+
+  const removeFromListData = (list: any[], index: number) => {
+    const removed = list.splice(index, 1)[0]
+
+    return [removed, list]
+  }
+
+  const addToList2 = (list: any[], index: number, item: any) => list.splice(index, 0, item)
+
+  const onDragEnd2 = (result: any) => {
+    if (!result.destination) return
+    const { source, destination } = result
+
+    /**
+     * get index groups
+     */
+    const groupIndexOrigin: number = getFindIndex(source.droppableId)
+    const groupIndexDestination: number = getFindIndex(destination.droppableId)
+    
+     /**
+      * Get questions to origin and destination
+      */
+    const questionsOrigin = getQuestions(groupIndexOrigin)
+    const questionDestination = getQuestions(groupIndexDestination)
+
+    const [ removed, newList ] = removeFromListData(questionsOrigin, result.source.index)
+    questionDestination.splice(destination.index, 0, removed)
+    //addToList2(questionsOrigin, destination.index, removed)
+
+    const copyData = [...data]
+
+    copyData[groupIndexOrigin].questions = newList
+    copyData[groupIndexDestination].questions = questionDestination
+  }
+
   const onDragEnd = (result: any) => {
     if (!result.destination) {
       return;
@@ -17,13 +55,14 @@ const DragVTwo = () => {
     const {source, destination, draggableId} = result;
 
     // Item origin
-    const groupOrigin = data.filter
-      ((item: any) => item.name === source.droppableId)
+    // const groupOrigin = data.filter
+    //   ((item: any) => item.name === source.droppableId)
 
     const groupIndexOrigin: number = data.findIndex
       ((item: any) => item.name === source.droppableId)
 
-    const listCopy: any = [...groupOrigin];
+    // const listCopy: any = [...groupOrigin];
+    //==========================================================================================
 
     // Item destination
     const groupIndexDestination: number = data.findIndex
@@ -55,7 +94,7 @@ const DragVTwo = () => {
   return (
     <DragDropContextContainer>
       <ListGrid>
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd2}>
           {data?.map((item: Data) => (
             <ListDragItem
               elements={item}

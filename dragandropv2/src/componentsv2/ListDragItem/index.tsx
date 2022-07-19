@@ -3,6 +3,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { ColumnHeader, DroppableStyles } from "../../estilos";
 import { Data, Questions } from "../../types";
 import ItemDrag from "../ItemDrag";
+import {Bloq} from "./styled";
 
 interface Props {
   elements: Data;
@@ -17,11 +18,11 @@ const ListDragItem: React.FC<Props> = (props) => {
       <ColumnHeader>{elements?.name}</ColumnHeader>
       <Droppable droppableId={`${prefix}`}>
         {(provided: any) => (
-          <div {...provided.droppableProps} ref={provided.innerRef} style={{ height: "90%" }}>
+          <Bloq {...provided.droppableProps} ref={provided.innerRef} >
             {elements?.questions?.map((question: Questions, index: number) => (
               <ItemDrag item={question} key={index} index={index} />
             ))}
-          </div>
+          </Bloq>
         )}
       </Droppable>
     </DroppableStyles>

@@ -56,5 +56,5 @@ export const DroppableStyles = styled.div`
   border-radius: 6px;
   background: #d4d4d4;
   margin-bottom: 20px;
-  height: 450px;
+  min-height: 450px;
 `;

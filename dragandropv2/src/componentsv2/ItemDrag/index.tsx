@@ -32,7 +32,7 @@ const ItemDrag: React.FC<Props> = (props) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <CardHeader>Description: {randomHeader}</CardHeader>
+          <CardHeader>Description: Quisque velit nisi, pretium ut lacinia in, elementum id enim.</CardHeader>
           <CardFooter>
             <span>Item: {item?.content}</span>
             <Author>
