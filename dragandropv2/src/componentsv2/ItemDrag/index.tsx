@@ -9,22 +9,18 @@ import {
   DragItem,
 } from "../../estilos";
 import { Questions } from "../../types";
-import { LoremIpsum } from "lorem-ipsum";
 
 interface Props {
   item: Questions;
   index: number;
+  id: string;
 }
 
-const lorem = new LoremIpsum();
-
 const ItemDrag: React.FC<Props> = (props) => {
-  const { item, index } = props;
-  const randomHeader = React.useMemo(() => lorem.generateWords(5), []);
-  // console.log(item)
+  const { item, index, id } = props;
 
   return (
-    <Draggable draggableId={item.id} index={index}>
+    <Draggable draggableId={id} index={index} key={id} >
       {(provided: any, snapshot: any) => (
         <DragItem
           ref={provided.innerRef}

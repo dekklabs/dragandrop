@@ -20,17 +20,20 @@ const DragVTwo = () => {
     return [removed, list]
   }
 
-  const addToList2 = (list: any[], index: number, item: any) => list.splice(index, 0, item)
-
-  const onDragEnd2 = (result: any) => {
+  const onDragEnd = (result: any) => {
     if (!result.destination) return
-    const { source, destination } = result
+    const { source, destination } = result;
+
+    if (source.droppableId === destination.droppableId && source.index === destination.index) return
+
+    if (result.type !== "COLUMN") return
 
     /**
      * get index groups
      */
     const groupIndexOrigin: number = getFindIndex(source.droppableId)
     const groupIndexDestination: number = getFindIndex(destination.droppableId)
+
     
      /**
       * Get questions to origin and destination
@@ -39,66 +42,27 @@ const DragVTwo = () => {
     const questionDestination = getQuestions(groupIndexDestination)
 
     const [ removed, newList ] = removeFromListData(questionsOrigin, result.source.index)
+    // const removed = questionsOrigin.splice(result.source.index, 1)[0];
     questionDestination.splice(destination.index, 0, removed)
-    //addToList2(questionsOrigin, destination.index, removed)
 
-    const copyData = [...data]
 
-    copyData[groupIndexOrigin].questions = newList
-    copyData[groupIndexDestination].questions = questionDestination
+     const copyData = [...data]
+    // console.log(copyData[groupIndexOrigin].questions)
+
+    // // copyData[groupIndexOrigin].questions = newList
+     copyData[groupIndexOrigin].questions = questionsOrigin
+     copyData[groupIndexDestination].questions = questionDestination
+     setdata(copyData)
   }
-
-  const onDragEnd = (result: any) => {
-    if (!result.destination) {
-      return;
-    }
-    const {source, destination, draggableId} = result;
-
-    // Item origin
-    // const groupOrigin = data.filter
-    //   ((item: any) => item.name === source.droppableId)
-
-    const groupIndexOrigin: number = data.findIndex
-      ((item: any) => item.name === source.droppableId)
-
-    // const listCopy: any = [...groupOrigin];
-    //==========================================================================================
-
-    // Item destination
-    const groupIndexDestination: number = data.findIndex
-      ((item: any) => item.name === destination.droppableId);
-
-    // Esamblado de arreglos
-    const questionsOrigin = [...data[groupIndexOrigin].questions]
-    const questionsDestination = [...data[groupIndexDestination].questions]
-
-    const [removedElement, newSourceList] = removeFromList(
-      // listCopy[0].questions,
-      questionsOrigin,
-      result.source.index
-    );
-
-    questionsDestination.splice(destination.index, 0, removedElement);
-    //addToListV2(questionsDestination, destination.index, removedElement)
-
-    const copyData = [...data];
-    console.log(newSourceList)
-    console.log(questionsDestination)
-
-    copyData[groupIndexOrigin].questions = newSourceList;
-    copyData[groupIndexDestination].questions = questionsDestination;
-
-    setdata(copyData);
-  };
 
   return (
     <DragDropContextContainer>
       <ListGrid>
-        <DragDropContext onDragEnd={onDragEnd2}>
+        <DragDropContext onDragEnd={onDragEnd}>
           {data?.map((item: Data) => (
             <ListDragItem
-              elements={item}
               key={item?.name}
+              elements={item}
               prefix={item?.name}
             />
           ))}
