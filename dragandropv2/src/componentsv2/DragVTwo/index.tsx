@@ -26,7 +26,6 @@ const DragVTwo = () => {
 
     if (source.droppableId === destination.droppableId && source.index === destination.index) return
 
-
     if (result.type !== "COLUMN") return
 
     /**
@@ -41,11 +40,13 @@ const DragVTwo = () => {
     const questionsOrigin = getQuestions(groupIndexOrigin)
     const questionDestination = getQuestions(groupIndexDestination)
 
+
+    const copyData = [...data]
+
     if (source.droppableId === destination.droppableId) {
       const element: any = questionsOrigin.splice(result.source.index, 1)[0]
       questionsOrigin.splice(destination.index, 0, element)
 
-      const copyData = [...data]
       copyData[groupIndexOrigin].questions = questionsOrigin
       setdata(copyData)
       return
@@ -54,8 +55,6 @@ const DragVTwo = () => {
     const [ removed, newList ] = removeFromListData(questionsOrigin, result.source.index)
     const newRemoved = {...removed}
     questionDestination.splice(destination.index, 0, newRemoved)
-
-    const copyData = [...data]
 
     copyData[groupIndexOrigin].questions = newList
     copyData[groupIndexDestination].questions = questionDestination
